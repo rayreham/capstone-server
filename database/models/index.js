@@ -3,12 +3,13 @@
 const Article = require("./article");
 const User = require("./user");
 
-// User.hasMany(Article);
+ User.hasMany(Article);
 
-// Article.belongsToMany(User);
+ Article.belongsToMany(User, {through: "bookmark "});
 // Student.belongsTo(Campus);
 
 module.exports = {
   Article,
   User
 };
+

@@ -28,7 +28,8 @@ const seedDatabase = async () => {
       firstName: "Chris", 
       lastName:'Rock',
       email:'chrisRock@gmail',
-      userName:'IsTheRealChrisRockUsername'
+      userName:'IsTheRealChrisRockUsername',
+      bookmark:[1]
       //imageUrl: ""
     }),
 

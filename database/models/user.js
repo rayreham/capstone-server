@@ -8,7 +8,7 @@ const User = db.define("user", {
   userName: { type: Sequelize.STRING, allowNull: false},
   imageUrl: {type: Sequelize.STRING,
     defaultValue: "https://via.placeholder.com/480x240?text=Placeholder"},
-  // bookmark: {type: Sequelize.ARRAY, allowNull:true}
+   bookmark: {type: Sequelize.ARRAY(Sequelize.INTEGER), allowNull:true}
 //gpa range may need to be changed
 
 });
