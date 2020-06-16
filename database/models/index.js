@@ -1,13 +1,14 @@
 // Here, we can prepare to register our models, set up associations between tables, and generate a barrel file for the models;
 
-const Campus = require("./campus");
-const Student = require("./student");
+const Article = require("./article");
+const User = require("./user");
 
-Campus.hasMany(Student);
+// User.hasMany(Article);
 
-Student.belongsTo(Campus);
+// Article.belongsToMany(User);
+// Student.belongsTo(Campus);
 
 module.exports = {
-  Campus,
-  Student,
+  Article,
+  User
 };

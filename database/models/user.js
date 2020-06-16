@@ -1,15 +1,16 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Student = db.define("student", {
+const User = db.define("user", {
   firstName: { type: Sequelize.STRING, allowNull: false },
   lastName: { type: Sequelize.STRING, allowNull: false},
   email: { type: Sequelize.STRING, allowNull: false, isEmail: true},
+  userName: { type: Sequelize.STRING, allowNull: false},
   imageUrl: {type: Sequelize.STRING,
     defaultValue: "https://via.placeholder.com/480x240?text=Placeholder"},
-  gpa: { type: Sequelize.FLOAT, validate: {min:0.0, max:4.0}}
+  // bookmark: {type: Sequelize.ARRAY, allowNull:true}
 //gpa range may need to be changed
 
 });
 
-module.exports = Student;
+module.exports = User;
