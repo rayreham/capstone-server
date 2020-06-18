@@ -15,7 +15,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 
 // Utilities;
-const createLocalDatabase = require("./utils/createLocalDatabase");
+//const createLocalDatabase = require("./utils/createLocalDatabase");
 const seedDatabase = require("./utils/seedDatabase");
 
 // Our database instance;
@@ -30,12 +30,13 @@ const syncDatabase = () => {
     db.sync({ force: true })
       .then(() => seedDatabase())
       .catch((err) => {
-        if (err.name === "SequelizeConnectionError") {
-          createLocalDatabase();
-          seedDatabase();
-        } else {
-          console.log(err);
-        }
+        // if (err.name === "SequelizeConnectionError") {
+        //  // createLocalDatabase();
+        //   seedDatabase();
+        // } else {
+        //   console.log(err);
+        // }
+        console.log(err)
       });
   }
 };

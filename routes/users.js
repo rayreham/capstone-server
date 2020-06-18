@@ -16,6 +16,22 @@ router.get("/", async (req, res, next) => {
     }
   });
 
+  router.post("/:id ", async (req, res, next) => {
+    // Take the form data from the request body
+    console.log(req.body)
+    const id = req.body;
+    // Create a campus object
+    try {
+      // Create a new campus on the database
+     const updateuser = await User.update({bookmark:id});
+      // The database would return a campus
+      // send that campus as a json to the client
+      res.status(201).send(updateuser);
+    } catch (err) {
+      next(err);
+    }
+  });
+
 //   // Route to serve singleuser based on its id
 // // /api/students/:id
 // // /api/students/456 would respond with a campus with id 456
