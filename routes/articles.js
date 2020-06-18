@@ -18,6 +18,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
 // // Route to serve single campus based on its id
 // // /api/campuses/:id
 // // /api/campuses/456 would respond with a campus with id 456

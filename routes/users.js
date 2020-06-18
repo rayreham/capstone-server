@@ -16,6 +16,22 @@ router.get("/", async (req, res, next) => {
     }
   });
 
+  router.get("/:id", async (req, res, next) => {
+    // take the id from params
+    const { id } = req.params;
+    // query the database for a campus with matching id
+    try {
+      // if successful:
+      const user = await User.findByPk(id);
+      // send back the campus as a response
+      res.status(200).json(user);
+    } catch (err) {
+      // if error:
+      // handle error
+      next(err);
+    }
+  });
+
 //   // Route to serve singleuser based on its id
 // // /api/students/:id
 // // /api/students/456 would respond with a campus with id 456
