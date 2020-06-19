@@ -1,36 +1,57 @@
 var express = require("express");
 var router = express.Router();
-const { /*Article, */ User } = require("../database/models");
+const { User, Article } = require("../database/models");
 
 router.get("/", async (req, res, next) => {
-    // try to get user object from database
-    try {
-      //users will be the result of theuser.findAll promise
-      const users = await User.findAll();
-      // ifuser is valid, it will be sent as a json response
-      console.log(users);
-      res.status(200).json(users);
-    } catch (err) {
-      // if there is an error, it'll passed via the next parameter to the error handler middleware
-      next(err);
-    }
-  });
-
-  router.post("/:id ", async (req, res, next) => {
-    // Take the form data from the request body
-    console.log(req.body)
-    const id = req.body;
-    // Create a campus object
-    try {
-      // Create a new campus on the database
-     const updateuser = await User.update({bookmark:id});
-      // The database would return a campus
-      // send that campus as a json to the client
-      res.status(201).send(updateuser);
-    } catch (err) {
-      next(err);
-    }
-  });
+  // try to get user object from database
+  try {
+    //users will be the result of theuser.findAll promise
+    const users = await User.findAll();
+    // ifuser is valid, it will be sent as a json response
+    console.log(users);
+    res.status(200).json(users);
+  } catch (err) {
+    // if there is an error, it'll passed via the next parameter to the error handler middleware
+    next(err);
+  }
+});
+//SS: hoping that the id is student id
+//and req.body structure is like this 
+//{
+// firstName: Some FirstName,
+// lastName: some lastName,
+// email: some_email
+// userName : username
+// bookmark_id:id of article 
+//}
+//return 201 if success and 500 on error 
+router.put("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { first_name, last_name, email_add, user_name, bookmark_id } = req.body; 
+  try {
+    let current_student = await User.findByPk(id).then(function (usr) {
+      if (usr) {
+        //if user exists
+        current_student.update({ bookmark: [bookmark_id] });
+        res.status(201).json(current_student);
+      } else {
+        //if user is not found  create a new user
+        let new_student = User.create({
+          firstName: first_name,
+          lastName: last_name,
+          email: email_add,
+          userName: user_name,
+          bookmark: [bookmark_id]
+        });
+        res.status(201).json(new_student);
+      }
+    });
+  } catch (err) {
+    console.log(id);
+    console.log(user_name);
+    next(err);
+  }
+});
 
 //   // Route to serve singleuser based on its id
 // // /api/students/:id

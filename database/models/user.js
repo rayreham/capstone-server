@@ -7,10 +7,9 @@ const User = db.define("user", {
   email: { type: Sequelize.STRING, allowNull: false, isEmail: true},
   userName: { type: Sequelize.STRING, allowNull: false},
   imageUrl: {type: Sequelize.STRING,
-    defaultValue: "https://via.placeholder.com/480x240?text=Placeholder"},
-   bookmark: {type: Sequelize.ARRAY(Sequelize.INTEGER), allowNull:true}
+  defaultValue: "https://via.placeholder.com/480x240?text=Placeholder"},
+  bookmark: {type: Sequelize.ARRAY(Sequelize.INTEGER), allowNull:true}
 //gpa range may need to be changed
-
 });
 
 module.exports = User;
