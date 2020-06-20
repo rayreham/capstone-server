@@ -25,8 +25,8 @@ router.get("/", async (req, res, next) => {
 // bookmark_id:id of article 
 //}
 //return 201 if success and 500 on error 
-router.put("/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.put("/", async (req, res, next) => {
+  const { id } = req.query;
   const { first_name, last_name, email_add, user_name, bookmark_id } = req.body; 
   try {
     let current_student = await User.findByPk(id).then(function (usr) {
@@ -52,6 +52,56 @@ router.put("/:id", async (req, res, next) => {
     next(err);
   }
 });
+//
+//req.body takes in=> headline, sourcename,author etc
+//req,query takes in article_id to search if the article exits | !
+//gives 200 on success.....
+//
+router.put("/getArticle",async(req,res,next)=>{
+  const {article_id} = req.query;
+  const {head_line,src_name, author, descrip, article_url,pub_date} = req.body;
+  try{
+    let article_ = await Article.findByPk(article_id).then((doc) =>{
+      if(doc){
+        res.status(200).send(doc.dataValues)
+      }else{
+        const enter_value ={
+          headline:head_line,
+          source:src_name,
+          author:author,
+          articleUrl:article_url,
+          publishedAt : pub_date,
+          description:descrip          
+        
+        };
+        let current_article = Article.create(
+          enter_value
+        ); 
+        res.status(200).send(Article.findAll({where:enter_value}));
+      }
+     
+    })
+  }catch(err){
+    next(err);
+  }
+
+})
+
+// const { username, email_id, article, headline, bookmark_id } = req.body; 
+// try {
+//   let current_student = await User.findByPk(id).then(function (usr) {
+//     if (usr) {
+//       Current.Studentcontains (ID).then ({ bookmark: [bookmark_id] });
+//      else{
+//      let new_student = User.create({
+//     UserName: first_name,
+//      email: last_name,
+//      Headline: 
+//      bookmark: [bookmark_id]
+// });
+
+// }
+//       res.status(201).json(current_student); 
 
 //   // Route to serve singleuser based on its id
 // // /api/students/:id
