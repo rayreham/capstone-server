@@ -25,6 +25,8 @@ router.get("/", async (req, res, next) => {
 // bookmark_id:id of article 
 //}
 //return 201 if success and 500 on error 
+//axios.get("http.localhost:3000/api/users/id=1")
+//users/?id=
 router.put("/", async (req, res, next) => {
   const { id } = req.query;
   const { first_name, last_name, email_add, user_name, bookmark_id } = req.body; 
@@ -59,7 +61,7 @@ router.put("/", async (req, res, next) => {
 //
 router.put("/getArticle",async(req,res,next)=>{
   const {article_id} = req.query;
-  const {head_line,src_name, author, descrip, article_url,pub_date} = req.body;
+  const {image,head_line,src_name, author, descrip, article_url,pub_date} = req.body;
   try{
     let article_ = await Article.findByPk(article_id).then((doc) =>{
       if(doc){
@@ -71,7 +73,8 @@ router.put("/getArticle",async(req,res,next)=>{
           author:author,
           articleUrl:article_url,
           publishedAt : pub_date,
-          description:descrip          
+          description:descrip,
+          imageUrl: image          
         
         };
         let current_article = Article.create(
