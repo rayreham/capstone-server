@@ -23,7 +23,6 @@ router.get("/:id", async (req, res, next) => {
     //users will be the result of theuser.findAll promise
     const users = await User.findByPk(id);
     // ifuser is valid, it will be sent as a json response
-    console.log(users);
     res.status(200).json(users);
   } catch (err) {
     // if there is an error, it'll passed via the next parameter to the error handler middleware
@@ -31,20 +30,20 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 //SS: hoping that the id is student id
-//and req.body structure is like this 
+//and req.body structure is like this
 //{
 // firstName: Some FirstName,
 // lastName: some lastName,
 // email: some_email
 // userName : username
-// bookmark_id:id of article 
+// bookmark_id:id of article
 //}
-//return 201 if success and 500 on error 
+//return 201 if success and 500 on error
 //axios.get("http.localhost:3000/api/users/id=1")
 //users/?id=
 router.put("/", async (req, res, next) => {
   const { id } = req.query;
-  const { first_name, last_name, email_add, user_name, bookmark_id } = req.body; 
+  const { first_name, last_name, email_add, user_name, bookmark_id } = req.body;
   try {
     let current_student = await User.findByPk(id).then(function (usr) {
       if (usr) {
@@ -58,7 +57,7 @@ router.put("/", async (req, res, next) => {
           lastName: last_name,
           email: email_add,
           userName: user_name,
-          bookmark: [bookmark_id]
+          bookmark: [bookmark_id],
         });
         res.status(201).json(new_student);
       }
@@ -74,27 +73,32 @@ router.put("/", async (req, res, next) => {
 //req,query takes in article_id to search if the article exits | !
 //gives 200 on success.....
 //
-router.put("/getArticle",async(req,res,next)=>{
-  const {article_id} = req.query;
-  const {image,head_line,src_name, author, descrip, article_url,pub_date} = req.body;
-  try{
-    let article_ = await Article.findByPk(article_id).then((doc) =>{
-      if(doc){
-        res.status(200).send(doc.dataValues)
-      }else{
-        const enter_value ={
-          headline:head_line,
-          source:src_name,
-          author:author,
-          articleUrl:article_url,
-          publishedAt : pub_date,
-          description:descrip,
-          imageUrl: image          
-        
+router.put("/getArticle", async (req, res, next) => {
+  const { article_id } = req.query;
+  const {
+    image,
+    head_line,
+    src_name,
+    author,
+    descrip,
+    article_url,
+    pub_date,
+  } = req.body;
+  try {
+    const article_ = await Article.findByPk(article_id)
+      if (article_) {
+        res.status(200).send(article_.dataValues);
+      } else {
+        const enter_value = {
+          headline: head_line,
+          source: src_name,
+          author: author,
+          articleUrl: article_url,
+          publishedAt: pub_date,
+          description: descrip,
+          imageUrl: image,
         };
-        let current_article = Article.create(
-          enter_value
-        ); 
+        const current_article = await Article.create(enter_value);
 
         // get the id from request params
         //eventually once we figure out how to track the user that is logged in, this will be the code to get the id from the url
@@ -102,32 +106,31 @@ router.put("/getArticle",async(req,res,next)=>{
 
         //just to test out that this works, will update the user's bookmark to include this article id.
 
-        // const user = User.findByPk(2);
-        
-        // user.bookmark.concat(current_article.id);
+        const user = await User.findByPk(2);
+
+        // user.bookmark.push(current_article.id);
         // User.update(user);
 
-        const user = User.findByPk(2);
-        
+        await user.update({ bookmark: [...user.bookmark, current_article.id] });
+
+        //const user = User.findByPk(2);
+
         // .then((user) => {
         //   user.bookmark.push(current_article.id)
         //   User.update({user})
         // })
         // .then((user => res.status(200).send(user)));
 
-        
         //res.status(200).send(Article.findAll({where:enter_value}));
         res.status(200).send(user);
       }
-     
-    })
-  }catch(err){
+    }
+   catch (err) {
     next(err);
   }
+});
 
-})
-
-// const { username, email_id, article, headline, bookmark_id } = req.body; 
+// const { username, email_id, article, headline, bookmark_id } = req.body;
 // try {
 //   let current_student = await User.findByPk(id).then(function (usr) {
 //     if (usr) {
@@ -136,12 +139,12 @@ router.put("/getArticle",async(req,res,next)=>{
 //      let new_student = User.create({
 //     UserName: first_name,
 //      email: last_name,
-//      Headline: 
+//      Headline:
 //      bookmark: [bookmark_id]
 // });
 
 // }
-//       res.status(201).json(current_student); 
+//       res.status(201).json(current_student);
 
 //   // Route to serve singleuser based on its id
 // // /api/students/:id
