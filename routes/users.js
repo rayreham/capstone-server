@@ -15,6 +15,21 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+
+router.get("/:id", async (req, res, next) => {
+  // try to get user object from database
+  const { id } = req.params;
+  try {
+    //users will be the result of theuser.findAll promise
+    const users = await User.findByPk(id);
+    // ifuser is valid, it will be sent as a json response
+    console.log(users);
+    res.status(200).json(users);
+  } catch (err) {
+    // if there is an error, it'll passed via the next parameter to the error handler middleware
+    next(err);
+  }
+});
 //SS: hoping that the id is student id
 //and req.body structure is like this 
 //{
@@ -80,7 +95,29 @@ router.put("/getArticle",async(req,res,next)=>{
         let current_article = Article.create(
           enter_value
         ); 
-        res.status(200).send(Article.findAll({where:enter_value}));
+
+        // get the id from request params
+        //eventually once we figure out how to track the user that is logged in, this will be the code to get the id from the url
+        // const { id } = req.params;
+
+        //just to test out that this works, will update the user's bookmark to include this article id.
+
+        // const user = User.findByPk(2);
+        
+        // user.bookmark.concat(current_article.id);
+        // User.update(user);
+
+        const user = User.findByPk(2);
+        
+        // .then((user) => {
+        //   user.bookmark.push(current_article.id)
+        //   User.update({user})
+        // })
+        // .then((user => res.status(200).send(user)));
+
+        
+        //res.status(200).send(Article.findAll({where:enter_value}));
+        res.status(200).send(user);
       }
      
     })
