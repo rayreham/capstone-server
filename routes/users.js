@@ -21,9 +21,15 @@ router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     //users will be the result of theuser.findAll promise
-    const users = await User.findByPk(id);
+    const user = await User.findByPk(id , {include : Article})
+   // const users = await User.findByPk(id);
     // ifuser is valid, it will be sent as a json response
-    res.status(200).json(users);
+    for(let i = 0; i < user.bookmark.length; i++)
+    {
+      let article=await Article.findByPk(user.bookmark[i])
+      user.articles.push(article);
+    }
+    res.status(200).json(user);
   } catch (err) {
     // if there is an error, it'll passed via the next parameter to the error handler middleware
     next(err);
