@@ -9,7 +9,7 @@ console.log("Opening database connection");
 
 // This is our entry point, we instantiate the Sequelize instance accordingly;
 const db = new Sequelize(
-  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
+  process.env.DATABASE_URL,
   { logging: false }
 );
 
