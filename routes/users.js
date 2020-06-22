@@ -128,7 +128,7 @@ router.put("/getArticle", async (req, res, next) => {
         // .then((user => res.status(200).send(user)));
 
         //res.status(200).send(Article.findAll({where:enter_value}));
-        res.status(200).send(user);
+        res.status(200).send(current_article);
       }
     }
    catch (err) {
