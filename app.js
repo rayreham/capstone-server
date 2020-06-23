@@ -158,7 +158,6 @@ const bootApp = async () => {
 
 // Utilities;
 const createLocalDatabase = require("./utils/createLocalDatabase");
-const seedDatabase = require("./utils/seedDatabase");
 
 // Our database instance;
 //const db = require("./database");
