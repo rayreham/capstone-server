@@ -3,7 +3,7 @@
 const Article = require("./article");
 const User = require("./user");
 
- User.hasMany(Article);
+ User.belongsToMany(Article, {through:"bookmark"});
 
  Article.belongsToMany(User, {through:"bookmark"});
 // Student.belongsTo(Campus);

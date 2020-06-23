@@ -3,7 +3,14 @@ const db = require("../db");
 //NEW
 const crypto = require("crypto");
 
-const User = db.define("user", {
+const User = db.define("user", { 
+  firstName: { type: Sequelize.STRING, allowNull: true },
+  lastName: { type: Sequelize.STRING, allowNull: true},
+  imageUrl: {
+     type: Sequelize.STRING,
+     defaultValue: "https://via.placeholder.com/480x240?text=Placeholder"
+    },
+  bookmark: {type: Sequelize.ARRAY(Sequelize.INTEGER), allowNull:true},
   email: {
     type: Sequelize.STRING,
     unique: true,
