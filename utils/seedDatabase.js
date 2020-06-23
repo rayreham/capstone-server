@@ -42,7 +42,8 @@ const seedDatabase = async () => {
       firstName: "Rachel", 
       lastName:'Greene',
       email:'rachelGreene@yahoo.com',
-      userName:'SallyIsMeUsername'
+      userName:'SallyIsMeUsername',
+      password: 'hello'
       //imageUrl: ""
     }),
 
@@ -52,6 +53,7 @@ const seedDatabase = async () => {
       lastName:'Rock',
       email:'chrisRock@gmail',
       userName:'IsTheRealChrisRockUsername',
+      password: 'niche',
       bookmark:[1]
       //imageUrl: ""
     }),
